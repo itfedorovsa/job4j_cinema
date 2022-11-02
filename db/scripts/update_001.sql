@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS tickets (
 ticket_id SERIAL PRIMARY KEY,
 session_id INT NOT NULL REFERENCES sessions(s_id),
 seat_id INT NOT NULL,
-user_id INT NOT NULL REFERENCES users(u_id)
+user_id INT NOT NULL REFERENCES users(u_id),
+UNIQUE (session_id, seat_id)
 );
 
 INSERT INTO sessions(s_name, s_year, s_description)

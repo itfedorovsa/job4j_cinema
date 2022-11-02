@@ -2,11 +2,8 @@ package ru.job4j.cinema.service;
 
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
-import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
-import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.persistence.TicketDBStore;
-import ru.job4j.cinema.persistence.UserDBStore;
 
 import java.util.*;
 
@@ -27,9 +24,9 @@ public class TicketService {
         return store.findById(id);
     }
 
-    /*public Optional<Ticket> findUserByEmailAndPhone(String email, String password) {
-        return store.findUserByEmailAndPhone(email, password);
-    }*/
+    public List<Ticket> findByUserId(int id) {
+        return store.findByUserId(id);
+    }
 
     public List<Ticket> findAll() {
         return store.findAll();

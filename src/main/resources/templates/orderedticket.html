@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!doctype html>
+<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -39,19 +39,44 @@
             </div>
         </div>
     </nav>
-    <div class="row">
-        <div class="card" style="width: 100%">
-            <div class="card-header" th:align="center">
-                Sorry! This place is already occupied.
-                <div class="vertical-center">
-                    <form th:action="@{/sessions}" method="GET" th:align="center">
-                        <br/>
-                        <button type="submit" class="btn btn-primary">Try again</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <br/>
+    <br/>
+    <h2 align="center">Ordered ticket:</h2>
+    <br/>
+    <div class="card">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Ticket ID:</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Session</th>
+                <th scope="col">Row</th>
+                <th scope="col">Cell</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ticket: ${tickets}">
+                <th th:text="${ticket.ticketId}"></th>
+                <th th:text="${ticket.user.name}"></th>
+                <th th:text="${ticket.user.email}"></th>
+                <th th:text="${ticket.user.phone}"></th>
+                <th th:text="${ticket.session.name}"></th>
+                <th th:text="${ticket.seat.row}"></th>
+                <th th:text="${ticket.seat.cell}"></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="vertical-center">
+        <form th:action="@{/sessions}" method="GET" th:align="center">
+            <br/>
+            <button type="submit" class="btn btn-primary">Back to movies menu.</button>
+        </form>
     </div>
 </div>
 </body>
 </html>
+
+

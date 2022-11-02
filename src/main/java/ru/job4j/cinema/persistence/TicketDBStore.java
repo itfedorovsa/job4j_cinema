@@ -9,6 +9,7 @@ import ru.job4j.cinema.model.Seat;
 import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
+import ru.job4j.cinema.service.SeatGridService;
 import ru.job4j.cinema.service.SeatService;
 
 import java.sql.Connection;
@@ -26,13 +27,30 @@ public class TicketDBStore {
     private final SeatService seatService;
 
     private static final String INSERT = "INSERT INTO tickets(session_id, seat_id, user_id) VALUES (?, ?, ?)";
+
     private static final String SELECT_ALL = """
             SELECT t.ticket_id, u.u_name, u.u_email, u.u_phone, s.s_name, t.seat_id
             FROM tickets t
             INNER JOIN sessions s ON t.session_id = s.s_id
             INNER JOIN users u ON t.user_id = u.u_id
             """;
-    private static final String SELECT_ID = "SELECT * FROM tickets WHERE id = ?";
+
+    private static final String SELECT_USER_ID = """
+            SELECT t.ticket_id, u.u_name, u.u_email, u.u_phone, s.s_name, t.seat_id, t.user_id
+            FROM tickets t
+            INNER JOIN sessions s ON t.session_id = s.s_id
+            INNER JOIN users u ON t.user_id = u.u_id
+            WHERE t.user_id = ?
+            """;
+
+    private static final String SELECT_TICKET_ID = """
+            SELECT t.ticket_id, u.u_name, u.u_email, u.u_phone, s.s_name, t.seat_id, t.user_id
+            FROM tickets t
+            INNER JOIN sessions s ON t.session_id = s.s_id
+            INNER JOIN users u ON t.user_id = u.u_id
+            WHERE t.ticket_id = ?
+            """;
+
     private static final Logger LOG = LogManager.getLogger(UserDBStore.class.getName());
 
     public TicketDBStore(BasicDataSource pool, SeatService seatService) {
@@ -63,7 +81,7 @@ public class TicketDBStore {
     public Optional<Ticket> findById(int id) {
         Optional<Ticket> rsl = Optional.empty();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(SELECT_ID)) {
+             PreparedStatement ps =  cn.prepareStatement(SELECT_TICKET_ID)) {
                 ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
@@ -74,6 +92,22 @@ public class TicketDBStore {
             LOG.error("Exception in findById()", e);
         }
         return rsl;
+    }
+
+    public List<Ticket> findByUserId(int id) {
+        List<Ticket> tickets = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(SELECT_USER_ID)) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    tickets.add(newTicket(it));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in findByUserId()", e);
+        }
+        return tickets;
     }
 
     public List<Ticket> findAll() {
@@ -90,6 +124,8 @@ public class TicketDBStore {
         }
         return tickets;
     }
+
+
 
     private Ticket newTicket(ResultSet rslSet) throws SQLException {
         int id = rslSet.getInt("seat_id");

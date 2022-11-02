@@ -15,18 +15,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <title>Cinema!</title>
+    <title>The Fast And The Furious Cinema</title>
 </head>
 <body th:background="@{/images/bg.jpg}" th:width="1920">
 
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Cinema!</a>
+        <a class="navbar-brand" href="#">The Fast And The Furious Cinema</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup" opacity="3">
             <div class="navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/sessions}">Sessions</a>
+                <a class="nav-item nav-link" th:href="@{/tickets}">My Tickets</a>
                 <a class="nav-item nav-link" th:if="${user.name == 'Guest'}" th:href="@{/loginPage}">
                     <span th:text="${user.name}"></span>
                     <span> | Log in</span>

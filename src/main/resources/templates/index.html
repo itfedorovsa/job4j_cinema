@@ -27,6 +27,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup" opacity="3">
             <div class="navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/sessions}">Sessions</a>
+                <a class="nav-item nav-link" th:href="@{/tickets}">Tickets</a>
+                <a class="nav-item nav-link" th:href="@{/profile}">Profile</a>
                 <a class="nav-item nav-link" th:if="${user.name == 'Guest'}" th:href="@{/loginPage}">
                     <span th:text="${user.name}"></span>
                     <span> | Log in</span>
@@ -42,11 +45,11 @@
     <br/>
     <h2 align="center">Welcome to The Fast And The Furious Cinema!</h2>
     <br/>
-<div class="vertical-center">
-    <form th:action="@{/sessions}" method="GET" th:align="center">
-        <button type="submit" class="btn btn-primary">Go to movie selection.</button>
-    </form>
-</div>
+    <div class="vertical-center">
+        <form th:action="@{/sessions}" method="GET" th:align="center">
+            <button type="submit" class="btn btn-primary">Go to movie selection.</button>
+        </form>
+    </div>
 </div>
 </div>
 </body>

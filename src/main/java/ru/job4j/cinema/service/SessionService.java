@@ -3,11 +3,17 @@ package ru.job4j.cinema.service;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.cinema.model.Session;
-import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.persistence.SessionDBStore;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
+/**
+ * Session service layer
+ *  * @author itfedorovsa (itfedorovsa@gmail.com)
+ *  * @since 03.11.22
+ *  * @version 1.0
+ */
 @ThreadSafe
 @Service
 public class SessionService {

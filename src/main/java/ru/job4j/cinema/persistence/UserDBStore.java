@@ -7,18 +7,29 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * User persistence layer
+ *  * @author itfedorovsa (itfedorovsa@gmail.com)
+ *  * @since 03.11.22
+ *  * @version 1.0
+ */
 @ThreadSafe
 @Repository
 public class UserDBStore {
     private final BasicDataSource pool;
     private static final String INSERT = "INSERT INTO users(u_name, u_email, u_phone) VALUES (?, ?, ?)";
     private static final String SELECT_ALL = "SELECT * FROM users";
-    private static final String UPDATE = "UPDATE users SET u_name = ?, u_phone = ? WHERE u_email = ?";
+    private static final String UPDATE = "UPDATE users SET u_name = ?, u_email = ?, u_phone = ? WHERE u_id = ?";
+    private static final String SELECT_EMAIL_AND_PHONE = "SELECT * FROM users WHERE u_email = ? AND u_phone = ?";
     private static final String SELECT_EMAIL = "SELECT * FROM users WHERE u_email = ?";
     private static final String SELECT_ID = "SELECT * FROM users WHERE u_id = ?";
     private static final String SELECT_PHONE = "SELECT * FROM users WHERE u_phone = ?";
@@ -54,6 +65,7 @@ public class UserDBStore {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getPhone());
+            ps.setInt(4, user.getUserId());
             ps.execute();
         } catch (Exception e) {
             LOG.error("Exception in update()", e);
@@ -103,11 +115,28 @@ public class UserDBStore {
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     rsl = Optional.of(newUser(it));
-                    System.out.println(newUser(it));
                 }
             }
         } catch (Exception e) {
             LOG.error("Exception in findByPhone()", e);
+        }
+        return rsl;
+    }
+
+    public Optional<User> findByEmailAndPhone(String email, String phone) {
+        Optional<User> rsl = Optional.empty();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(SELECT_EMAIL_AND_PHONE)
+        ) {
+            ps.setString(1, email);
+            ps.setString(2, phone);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    rsl = Optional.of(newUser(it));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in findByEmailAndPhone()", e);
         }
         return rsl;
     }
@@ -128,6 +157,12 @@ public class UserDBStore {
         return users;
     }
 
+    /**
+     * Standalone method for creating User object
+     * @param rslSet query from DB
+     * @return User with values from ResultSet received from query
+     * @throws SQLException may be thrown during interaction with the DB
+     */
     private User newUser(ResultSet rslSet) throws SQLException {
         return new User(rslSet.getInt("u_id"),
                 rslSet.getString("u_name"),

@@ -10,7 +10,6 @@ import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SeatGridService;
-import ru.job4j.cinema.service.SeatService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,11 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Ticket persistence layer
+ *  * @author itfedorovsa (itfedorovsa@gmail.com)
+ *  * @since 03.11.22
+ *  * @version 1.0
+ */
 @ThreadSafe
 @Repository
 public class TicketDBStore {
     private final BasicDataSource pool;
-    private final SeatService seatService;
+    private final SeatGridService seatGridService;
 
     private static final String INSERT = "INSERT INTO tickets(session_id, seat_id, user_id) VALUES (?, ?, ?)";
 
@@ -53,9 +58,9 @@ public class TicketDBStore {
 
     private static final Logger LOG = LogManager.getLogger(UserDBStore.class.getName());
 
-    public TicketDBStore(BasicDataSource pool, SeatService seatService) {
+    public TicketDBStore(BasicDataSource pool, SeatGridService seatGridService) {
         this.pool = pool;
-        this.seatService = seatService;
+        this.seatGridService = seatGridService;
     }
 
     public Optional<Ticket> add(Ticket ticket) {
@@ -125,17 +130,24 @@ public class TicketDBStore {
         return tickets;
     }
 
-
-
+    /**
+     * Standalone method for creating Ticket object
+     * @param rslSet query from DB
+     * @return Ticket with values from ResultSet received from query
+     * @throws SQLException may be thrown during interaction with the DB
+     */
     private Ticket newTicket(ResultSet rslSet) throws SQLException {
         int id = rslSet.getInt("seat_id");
-        Seat seat = seatService.findById(id);
+        Seat seat = seatGridService.findById(id);
+        if (seat == null) {
+            seat = new Seat(-1, 0, 0);
+        }
         return new Ticket(rslSet.getInt("ticket_id"),
                 new Session(rslSet.getString("s_name")),
                 new Seat(seat.getRow(), seat.getCell()),
                 new User(rslSet.getString("u_name"),
                         rslSet.getString("u_email"),
                         rslSet.getString("u_phone")
-                        ));
+                ));
     }
 }

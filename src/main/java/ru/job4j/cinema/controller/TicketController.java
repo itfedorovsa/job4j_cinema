@@ -3,66 +3,111 @@ package ru.job4j.cinema.controller;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.job4j.cinema.model.Seat;
 import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.*;
 
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * TicketController
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @since 03.11.22
+ * @version 1.0
+ */
 @ThreadSafe
 @Controller
 public class TicketController {
     private final SessionService sessionService;
-    private final SeatService seatService;
     private final SeatGridService seatGridService;
+    private final SeatService seatService;
     private final TicketService ticketService;
     private final UserService userService;
 
-    public TicketController(SessionService sessionService, SeatService seatService, SeatGridService seatGridService, TicketService ticketService, UserService userService) {
+    public TicketController(SessionService sessionService, SeatGridService seatGridService, SeatService seatService, TicketService ticketService, UserService userService) {
         this.sessionService = sessionService;
-        this.seatService = seatService;
         this.seatGridService = seatGridService;
+        this.seatService = seatService;
         this.ticketService = ticketService;
         this.userService = userService;
     }
 
+    /**
+     * Tickets page
+     * @param model Model
+     * @param httpSession HTTPSession
+     * @return tickets.html - all purchased tickets by current user
+     */
     @GetMapping("/tickets")
     public String tickets(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         model.addAttribute("movies", sessionService.findAll());
-        model.addAttribute("seats", seatService.getAllSeats());
+        model.addAttribute("seats", seatGridService.getAllSeats());
         model.addAttribute("tickets", ticketService.findByUserId(user.getUserId()));
         model.addAttribute("user", getUser(httpSession));
         return "tickets";
     }
 
+    /**
+     * Order fail page
+     * @param model Model
+     * @param httpSession HTTPSession
+     * @return orderFail.html - page-warning about the inability to buy a ticket
+     */
     @GetMapping("/orderFail")
     public String orderFail(Model model, HttpSession httpSession) {
         model.addAttribute("user", getUser(httpSession));
         return "orderFail";
     }
 
+    /**
+     * Ticket order page
+     * @param model Model
+     * @param ticketId Ticket id from DB
+     * @param httpSession HTTPSession
+     * @return orderedTicket.html - page with purchased ticket
+     */
     @GetMapping("/orderedTicket")
     public String orderTicket(Model model, @RequestParam("ticketId") int ticketId, HttpSession httpSession) {
         model.addAttribute("movies", sessionService.findAll());
-        model.addAttribute("seats", seatService.getAllSeats());
+        model.addAttribute("seats", seatGridService.getAllSeats());
         model.addAttribute("tickets", ticketService.findById(ticketId).get());
         model.addAttribute("user", getUser(httpSession));
         return "orderedTicket";
     }
 
+    /**
+     * Ticket creating page
+     * @param model Model
+     * @param id current session id
+     * @param httpSession HTTPSession
+     * @return addTicket.html - ticket creating form
+     */
     @GetMapping("/formAddTicket/{movieId}")
-    public String formAddTicket(Model model, @PathVariable("movieId") int id, HttpSession session) {
-        model.addAttribute("seats", seatGridService.getFreeSeats(id));
+    public String formAddTicket(Model model, @PathVariable("movieId") int id, HttpSession httpSession) {
+        model.addAttribute("seats", seatService.getFreeSeats(id));
         model.addAttribute("movies", sessionService.findAll());
         model.addAttribute("movieId", id);
-        model.addAttribute("user", getUser(session));
+        model.addAttribute("user", getUser(httpSession));
         return "addTicket";
     }
 
+    /**
+     * Post method for creating a ticket
+     * @param model
+     * @param id
+     * @param seatId
+     * @param httpSession
+     * @return order fail page or page with purchased ticket
+     */
     @PostMapping("/createTicket")
     public String createTicket(Model model, @RequestParam("movie.sessionId") int id,
                                @RequestParam("seat.seatId") int seatId, HttpSession httpSession) {
@@ -77,10 +122,14 @@ public class TicketController {
         if (u.isPresent()) {
             user = u.get();
         }
+        Seat seat = seatGridService.findById(seatId);
+        if (seat == null) {
+            seat = new Seat(-1);
+        }
         Ticket ticket = new Ticket(
                 0,
                 session,
-                seatService.findById(seatId),
+                seat,
                 user
                 );
         Optional<Ticket> order = ticketService.add(ticket);
@@ -90,8 +139,13 @@ public class TicketController {
         return "redirect:/orderedTicket?ticketId=" + order.get().getTicketId();
     }
 
-    private User getUser(HttpSession session) {
-        User user = (User) session.getAttribute("user");
+    /**
+     * Gives "Guest" name if user unregistered
+     * @param httpSession HTTPSession
+     * @return user with "Guest" name or user with currrent name
+     */
+    private User getUser(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             user = new User();
             user.setName("Guest");

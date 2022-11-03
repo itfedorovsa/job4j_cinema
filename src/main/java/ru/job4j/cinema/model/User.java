@@ -3,7 +3,10 @@ package ru.job4j.cinema.model;
 import java.util.Objects;
 
 /**
- *
+ * User data model
+ *  * @author itfedorovsa (itfedorovsa@gmail.com)
+ *  * @since 03.11.22
+ *  * @version 1.0
  */
 public class User {
     private int userId;
@@ -26,8 +29,6 @@ public class User {
         this.email = email;
         this.phone = phone;
     }
-
-
 
     public User(int userId) {
         this.userId = userId;

@@ -2,6 +2,12 @@ package ru.job4j.cinema.model;
 
 import java.util.Objects;
 
+/**
+ * Session data model
+ *  * @author itfedorovsa (itfedorovsa@gmail.com)
+ *  * @since 03.11.22
+ *  * @version 1.0
+ */
 public class Session {
     private int sessionId;
     private String name;

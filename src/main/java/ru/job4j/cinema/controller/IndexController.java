@@ -1,10 +1,9 @@
 package ru.job4j.cinema.controller;
 
 import net.jcip.annotations.ThreadSafe;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SessionService;
 
@@ -12,6 +11,13 @@ import javax.servlet.http.HttpSession;
 
 @ThreadSafe
 @Controller
+
+/**
+ * IndexController
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @since 03.11.22
+ * @version 1.0
+ */
 public class IndexController {
     private final SessionService sessionService;
 
@@ -19,6 +25,12 @@ public class IndexController {
         this.sessionService = sessionService;
     }
 
+    /**
+     * Index page
+     * @param model Model
+     * @param httpSession HTTPSession
+     * @return index.html - start page
+     */
     @GetMapping("/index")
     public String index(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");

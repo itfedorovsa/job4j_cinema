@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Session persistence layer
+ *  * @author itfedorovsa (itfedorovsa@gmail.com)
+ *  * @since 03.11.22
+ *  * @version 1.0
+ */
 @ThreadSafe
 @Repository
 public class SessionDBStore {
@@ -94,6 +100,12 @@ public class SessionDBStore {
         return sessions;
     }
 
+    /**
+     * Standalone method for creating Session object
+     * @param rslSet query from DB
+     * @return Session with values from ResultSet received from query
+     * @throws SQLException may be thrown during interaction with the DB
+     */
     private Session newSession(ResultSet rslSet) throws SQLException {
         return new Session(rslSet.getInt("s_id"),
                 rslSet.getString("s_name"),

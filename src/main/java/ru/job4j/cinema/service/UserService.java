@@ -8,6 +8,12 @@ import ru.job4j.cinema.persistence.UserDBStore;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * User service layer
+ *  * @author itfedorovsa (itfedorovsa@gmail.com)
+ *  * @since 03.11.22
+ *  * @version 1.0
+ */
 @ThreadSafe
 @Service
 public class UserService {
@@ -23,6 +29,10 @@ public class UserService {
 
     public Optional<User> findByEmail(String email) {
         return store.findByEmail(email);
+    }
+
+    public Optional<User> findByEmailAndPhone(String email, String phone) {
+        return store.findByEmailAndPhone(email, phone);
     }
 
     public Optional<User> findById(int id) {

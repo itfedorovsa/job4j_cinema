@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -14,10 +13,11 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>The Fast And The Furious Cinema</title>
 </head>
 <body th:background="@{/images/bg.jpg}" th:width="1920">
+
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" th:href="@{/index}">The Fast And The Furious Cinema</a>
@@ -27,8 +27,8 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup" opacity="3">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" th:href="@{/sessions}">Sessions</a>
-                <a class="nav-item nav-link active" href="#">Tickets<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" th:href="@{/profile}">Profile</a>
+                <a class="nav-item nav-link" th:href="@{/tickets}">Tickets</a>
+                <a class="nav-item nav-link active" href="#">Profile<span class="sr-only">(current)</span></a>
                 <a class="nav-item nav-link" th:if="${user.name == 'Guest'}" th:href="@{/loginPage}">
                     <span th:text="${user.name}"></span>
                     <span> | Log in</span>
@@ -40,41 +40,28 @@
             </div>
         </div>
     </nav>
-    <br/>
-    <br/>
-    <h2 align="center">Your tickets:</h2>
-    <br/>
-    <div class="card">
+    <div class="row">
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Ticket ID:</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone</th>
-                <th scope="col">Session</th>
-                <th scope="col">Row</th>
-                <th scope="col">Cell</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="ticket: ${tickets}">
-                <th th:text="${ticket.ticketId}"></th>
-                <th th:text="${ticket.user.name}"></th>
-                <th th:text="${ticket.user.email}"></th>
-                <th th:text="${ticket.user.phone}"></th>
-                <th th:text="${ticket.session.name}"></th>
-                <th th:text="${ticket.seat.row}"></th>
-                <th th:text="${ticket.seat.cell}"></th>
+            <tr>
+                <td>
+                    <a th:href="@{|/updateProfile/${user.userId}|}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <span th:text="${user.name}"></span>
+                <td th:text="${user.email}"/>
+                <td th:text="${user.phone}"/>
+                </td>
             </tr>
             </tbody>
         </table>
-    </div>
-    <div class="vertical-center">
-        <form th:action="@{/sessions}" method="GET" th:align="center">
-            <br/>
-            <button type="submit" class="btn btn-primary">Back to movie sessions menu.</button>
-        </form>
     </div>
 </div>
 </body>

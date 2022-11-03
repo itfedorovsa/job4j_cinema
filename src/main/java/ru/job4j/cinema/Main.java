@@ -11,6 +11,9 @@ import java.util.Properties;
 
 /**
  *  Application launch class
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 @SpringBootApplication
 public class Main {
@@ -34,6 +37,10 @@ public class Main {
         return cfg;
     }
 
+    /**
+     * Starting DB connections' pool
+     * @return BasicDataSource pool with connections to DB
+     */
     @Bean
     public BasicDataSource loadPool() {
         Properties cfg = loadDbProperties();
@@ -48,6 +55,10 @@ public class Main {
         return pool;
     }
 
+    /**
+     * Starts the application.
+     * @param args app arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
         System.out.println("Go to http://localhost:8080/index");

@@ -2,12 +2,22 @@ package ru.job4j.cinema.model;
 
 import java.util.Objects;
 
+/**
+ * Seat data model
+ *  * @author itfedorovsa (itfedorovsa@gmail.com)
+ *  * @since 03.11.22
+ *  * @version 1.0
+ */
 public class Seat {
     int seatId;
     int row;
     int cell;
 
     public Seat() {
+    }
+
+    public Seat(int seatId) {
+        this.seatId = seatId;
     }
 
     public Seat(int row, int cell) {

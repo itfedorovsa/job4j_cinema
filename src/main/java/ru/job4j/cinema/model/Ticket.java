@@ -4,14 +4,30 @@ import java.util.Objects;
 
 /**
  * Ticket data model
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 public class Ticket {
+
+    /**
+     *  Ticket id.
+     */
     private int ticketId;
+
+    /**
+     *  Session object with its fields.
+     */
     private Session session;
+
+    /**
+     *  Seat object with its fields.
+     */
     private Seat seat;
+
+    /**
+     *  User object with its fields.
+     */
     private User user;
 
     public Ticket() {

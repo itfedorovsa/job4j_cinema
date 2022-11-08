@@ -4,13 +4,25 @@ import java.util.Objects;
 
 /**
  * Seat data model
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 public class Seat {
+
+    /**
+     *  Seat id (id from SeatGridService grid). Used to get row and cell values from SeatGridService.
+     */
     int seatId;
+
+    /**
+     *  Row number
+     */
     int row;
+
+    /**
+     *  Cell number
+     */
     int cell;
 
     public Seat() {

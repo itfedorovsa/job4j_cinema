@@ -4,14 +4,30 @@ import java.util.Objects;
 
 /**
  * User data model
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 public class User {
+
+    /**
+     *  User id.
+     */
     private int userId;
+
+    /**
+     *  User name.
+     */
     private String name;
+
+    /**
+     *  User email.
+     */
     private String email;
+
+    /**
+     *  User phone.
+     */
     private String phone;
 
     public User() {

@@ -1,4 +1,4 @@
-package ru.job4j.cinema.persistence;
+package ru.job4j.cinema.repository;
 
 import net.jcip.annotations.ThreadSafe;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -7,7 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.Seat;
 import ru.job4j.cinema.service.SeatGridService;
+import ru.job4j.cinema.service.SimpleSeatGridService;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,21 +18,22 @@ import java.util.List;
 
 /**
  * Seat persistence layer
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 @ThreadSafe
 @Repository
-public class SeatDBStore {
-    private final BasicDataSource pool;
+public class PostgresSeatRepository implements SeatRepository {
+    private final DataSource pool;
+
     private final SeatGridService seatGridService;
 
     private static final String SELECT_OCCUPIED_SEATS = "SELECT seat_id FROM tickets WHERE session_id = ?";
 
-    private static final Logger LOG = LogManager.getLogger(UserDBStore.class.getName());
+    private static final Logger LOG = LogManager.getLogger(PostgresUserRepository.class.getName());
 
-    public SeatDBStore(BasicDataSource pool, SeatGridService seatGridService) {
+    public PostgresSeatRepository(BasicDataSource pool, SimpleSeatGridService seatGridService) {
         this.pool = pool;
         this.seatGridService = seatGridService;
     }

@@ -4,14 +4,30 @@ import java.util.Objects;
 
 /**
  * Session data model
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 public class Session {
+
+    /**
+     *  Movie id.
+     */
     private int sessionId;
+
+    /**
+     *  Movie name.
+     */
     private String name;
+
+    /**
+     *  Movie's year of release.
+     */
     private int year;
+
+    /**
+     *  Movie's description.
+     */
     private String description;
 
     public Session() {
@@ -73,12 +89,12 @@ public class Session {
             return false;
         }
         Session session = (Session) o;
-        return sessionId == session.sessionId && Objects.equals(name, session.name) && Objects.equals(year, session.year) && Objects.equals(description, session.description);
+        return sessionId == session.sessionId && Objects.equals(name, session.name) && Objects.equals(year, session.year);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sessionId, name, year, description);
+        return Objects.hash(sessionId, name, year);
     }
 
     @Override

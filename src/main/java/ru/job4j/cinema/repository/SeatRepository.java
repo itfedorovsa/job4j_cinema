@@ -1,15 +1,15 @@
-package ru.job4j.cinema.service;
+package ru.job4j.cinema.repository;
 
 import ru.job4j.cinema.model.Seat;
 
 import java.util.List;
 
 /**
- * Seat service interface
+ *  Seat persistence interface
  *  @author itfedorovsa (itfedorovsa@gmail.com)
  *  @since 03.11.22
  *  @version 1.0
  */
-public interface SeatService {
+public interface SeatRepository {
     List<Seat> getFreeSeats(int sessionId);
 }

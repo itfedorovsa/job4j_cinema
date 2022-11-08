@@ -1,4 +1,4 @@
-package ru.job4j.cinema.persistence;
+package ru.job4j.cinema.repository;
 
 import net.jcip.annotations.ThreadSafe;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,14 +19,14 @@ import java.util.Optional;
 
 /**
  * User persistence layer
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 @ThreadSafe
 @Repository
-public class UserDBStore {
-    private final BasicDataSource pool;
+public class PostgresUserRepository implements UserRepository {
+    private final DataSource pool;
     private static final String INSERT = "INSERT INTO users(u_name, u_email, u_phone) VALUES (?, ?, ?)";
     private static final String SELECT_ALL = "SELECT * FROM users";
     private static final String UPDATE = "UPDATE users SET u_name = ?, u_email = ?, u_phone = ? WHERE u_id = ?";
@@ -33,9 +34,9 @@ public class UserDBStore {
     private static final String SELECT_EMAIL = "SELECT * FROM users WHERE u_email = ?";
     private static final String SELECT_ID = "SELECT * FROM users WHERE u_id = ?";
     private static final String SELECT_PHONE = "SELECT * FROM users WHERE u_phone = ?";
-    private static final Logger LOG = LogManager.getLogger(UserDBStore.class.getName());
+    private static final Logger LOG = LogManager.getLogger(PostgresUserRepository.class.getName());
 
-    public UserDBStore(BasicDataSource pool) {
+    public PostgresUserRepository(BasicDataSource pool) {
         this.pool = pool;
     }
 

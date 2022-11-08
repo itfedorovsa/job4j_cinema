@@ -14,7 +14,6 @@ import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.*;
 
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -32,7 +31,8 @@ public class TicketController {
     private final TicketService ticketService;
     private final UserService userService;
 
-    public TicketController(SessionService sessionService, SeatGridService seatGridService, SeatService seatService, TicketService ticketService, UserService userService) {
+    public TicketController(SessionService sessionService, SeatGridService seatGridService,
+                            SeatService seatService, TicketService ticketService, UserService userService) {
         this.sessionService = sessionService;
         this.seatGridService = seatGridService;
         this.seatService = seatService;
@@ -79,7 +79,12 @@ public class TicketController {
     public String orderTicket(Model model, @RequestParam("ticketId") int ticketId, HttpSession httpSession) {
         model.addAttribute("movies", sessionService.findAll());
         model.addAttribute("seats", seatGridService.getAllSeats());
-        model.addAttribute("tickets", ticketService.findById(ticketId).get());
+        Optional<Ticket> ticket = ticketService.findById(ticketId);
+        Ticket ticketObj = new Ticket();
+        if (ticket.isPresent()) {
+            ticketObj = ticket.get();
+        }
+        model.addAttribute("tickets", ticketObj);
         model.addAttribute("user", getUser(httpSession));
         return "orderedTicket";
     }
@@ -102,10 +107,10 @@ public class TicketController {
 
     /**
      * Post method for creating a ticket
-     * @param model
-     * @param id
-     * @param seatId
-     * @param httpSession
+     * @param model Model
+     * @param id current session id
+     * @param seatId seat grid id
+     * @param httpSession HTTPSession
      * @return order fail page or page with purchased ticket
      */
     @PostMapping("/createTicket")

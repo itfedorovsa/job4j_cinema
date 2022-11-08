@@ -1,4 +1,4 @@
-package ru.job4j.cinema.persistence;
+package ru.job4j.cinema.repository;
 
 import net.jcip.annotations.ThreadSafe;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -10,7 +10,9 @@ import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SeatGridService;
+import ru.job4j.cinema.service.SimpleSeatGridService;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,14 +23,14 @@ import java.util.Optional;
 
 /**
  * Ticket persistence layer
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 @ThreadSafe
 @Repository
-public class TicketDBStore {
-    private final BasicDataSource pool;
+public class PostgresTicketRepository implements TicketRepository {
+    private final DataSource pool;
     private final SeatGridService seatGridService;
 
     private static final String INSERT = "INSERT INTO tickets(session_id, seat_id, user_id) VALUES (?, ?, ?)";
@@ -56,9 +58,9 @@ public class TicketDBStore {
             WHERE t.ticket_id = ?
             """;
 
-    private static final Logger LOG = LogManager.getLogger(UserDBStore.class.getName());
+    private static final Logger LOG = LogManager.getLogger(PostgresUserRepository.class.getName());
 
-    public TicketDBStore(BasicDataSource pool, SeatGridService seatGridService) {
+    public PostgresTicketRepository(BasicDataSource pool, SimpleSeatGridService seatGridService) {
         this.pool = pool;
         this.seatGridService = seatGridService;
     }

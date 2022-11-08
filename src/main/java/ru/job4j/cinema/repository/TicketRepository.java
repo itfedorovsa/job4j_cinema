@@ -1,4 +1,4 @@
-package ru.job4j.cinema.service;
+package ru.job4j.cinema.repository;
 
 import ru.job4j.cinema.model.Ticket;
 
@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Ticket service interface
+ *  Ticket persistence interface
  *  @author itfedorovsa (itfedorovsa@gmail.com)
  *  @since 03.11.22
  *  @version 1.0
  */
-public interface TicketService {
+public interface TicketRepository {
     Optional<Ticket> add(Ticket ticket);
 
     Optional<Ticket> findById(int id);

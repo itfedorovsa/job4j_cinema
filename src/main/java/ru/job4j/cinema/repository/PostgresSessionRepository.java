@@ -1,4 +1,4 @@
-package ru.job4j.cinema.persistence;
+package ru.job4j.cinema.repository;
 
 import net.jcip.annotations.ThreadSafe;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.Session;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,21 +18,21 @@ import java.util.Optional;
 
 /**
  * Session persistence layer
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ *  @author itfedorovsa (itfedorovsa@gmail.com)
+ *  @since 03.11.22
+ *  @version 1.0
  */
 @ThreadSafe
 @Repository
-public class SessionDBStore {
-    private final BasicDataSource pool;
+public class PostgresSessionRepository implements SessionRepository {
+    private final DataSource pool;
     private static final String INSERT = "INSERT INTO sessions(s_name, s_year, s_description) VALUES (?, ?, ?)";
     private static final String SELECT_ALL = "SELECT * FROM sessions";
     private static final String UPDATE = "UPDATE sessions SET s_name = ?, s_year = ? WHERE s_description = ?";
     private static final String SELECT_ID = "SELECT * FROM sessions WHERE s_id = ?";
-    private static final Logger LOG = LogManager.getLogger(UserDBStore.class.getName());
+    private static final Logger LOG = LogManager.getLogger(PostgresUserRepository.class.getName());
 
-    public SessionDBStore(BasicDataSource pool) {
+    public PostgresSessionRepository(BasicDataSource pool) {
         this.pool = pool;
     }
 

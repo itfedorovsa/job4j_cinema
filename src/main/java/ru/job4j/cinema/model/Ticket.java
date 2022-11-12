@@ -33,6 +33,12 @@ public class Ticket {
     public Ticket() {
     }
 
+    public Ticket(Session session, Seat seat, User user) {
+        this.session = session;
+        this.seat = seat;
+        this.user = user;
+    }
+
     public Ticket(int ticketId, Session session, Seat seat, User user) {
         this.ticketId = ticketId;
         this.session = session;

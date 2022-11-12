@@ -16,10 +16,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Ticket persistence test class
@@ -55,30 +57,78 @@ public class PostgresTicketRepositoryTest {
 
     @After
     public void wipeTable() throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM tickets; DELETE FROM users; ")) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM tickets; DELETE FROM users;")) {
             statement.execute();
         }
     }
 
     /**
-     *  Testing ticket adding
+     *  Ticket adding test
      */
     @Test
-    public void addTicket() {
+    public void whenAddTicket() {
         TicketRepository ticketRep = new PostgresTicketRepository(new Main().loadPool(), new SimpleSeatGridService());
         Session sessionObj = new Session(2, "name", 1999, "desc");
-        User userObj = new User(95, "name", "email", "phone");
-        SimpleSeatGridService seatGrid = new SimpleSeatGridService();
-        Seat seatObj = new Seat(3, seatGrid.findById(3).getRow(), seatGrid.findById(3).getCell());
         Optional<Session> session = new PostgresSessionRepository(
                 new Main().loadPool()).add(sessionObj);
-        assertThat(session).isPresent();
+        assertTrue(session.isPresent());
+        User userObj = new User(95, "name", "email13", "phone13");
         Optional<User> user = new PostgresUserRepository(
                 new Main().loadPool()).add(userObj);
-        assertThat(user).isPresent();
-        Ticket expected = new Ticket(1, session.get(), seatObj, userObj);
+        assertTrue(user.isPresent());
+        SimpleSeatGridService seatGrid = new SimpleSeatGridService();
+        Seat seatObj = new Seat(3, seatGrid.findById(3).getRow(), seatGrid.findById(3).getCell());
+        Ticket expected = new Ticket(1, session.get(), seatObj, user.get());
         Optional<Ticket> ticket = ticketRep.add(expected);
-        assertThat(ticket).isPresent();
-        assertThat(ticket.get()).isEqualTo(expected);
+        assertTrue(ticket.isPresent());
+        assertEquals(ticket.get(), expected);
+    }
+
+    /**
+     *  Searching by user id test
+     */
+    @Test
+    public void whenFindTicketByUserId() {
+        TicketRepository ticketRep = new PostgresTicketRepository(new Main().loadPool(), new SimpleSeatGridService());
+        Session sessionObj = new Session(2, "name", 1999, "desc");
+        Optional<Session> session = new PostgresSessionRepository(
+                new Main().loadPool()).add(sessionObj);
+        assertTrue(session.isPresent());
+        User userObj = new User("name", "email19", "phone19");
+        Optional<User> user = new PostgresUserRepository(
+                new Main().loadPool()).add(userObj);
+        assertTrue(user.isPresent());
+        SimpleSeatGridService seatGrid = new SimpleSeatGridService();
+        Seat seatObj = new Seat(3, seatGrid.findById(3).getRow(), seatGrid.findById(3).getCell());
+        Ticket baseTicket = new Ticket(5, session.get(), seatObj, userObj);
+        Optional<Ticket> ticket = ticketRep.add(baseTicket);
+        assertTrue(ticket.isPresent());
+        List<Ticket> extracted = ticketRep.findByUserId(user.get().getUserId());
+        assertEquals(1, extracted.size());
+        assertEquals("name", extracted.get(0).getSession().getName());
+    }
+
+    /**
+     *  All tickets searching test
+     */
+    @Test
+    public void whenFindAllTickets() {
+        TicketRepository ticketRep = new PostgresTicketRepository(new Main().loadPool(), new SimpleSeatGridService());
+        Session sessionObj = new Session(2, "name", 1999, "desc");
+        Optional<Session> session = new PostgresSessionRepository(
+                new Main().loadPool()).add(sessionObj);
+        assertTrue(session.isPresent());
+        User userObj = new User("name", "email21", "phone21");
+        Optional<User> user = new PostgresUserRepository(
+                new Main().loadPool()).add(userObj);
+        assertTrue(user.isPresent());
+        SimpleSeatGridService seatGrid = new SimpleSeatGridService();
+        Seat seatObj = new Seat(3, seatGrid.findById(3).getRow(), seatGrid.findById(3).getCell());
+        Ticket baseTicket = new Ticket(5, session.get(), seatObj, userObj);
+        Optional<Ticket> ticket = ticketRep.add(baseTicket);
+        assertTrue(ticket.isPresent());
+        List<Ticket> extracted = ticketRep.findAll();
+        assertEquals(1, extracted.size());
+        assertEquals("name", extracted.get(0).getSession().getName());
     }
 }

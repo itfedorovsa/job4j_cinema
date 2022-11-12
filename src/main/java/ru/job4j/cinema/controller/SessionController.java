@@ -40,7 +40,7 @@ public class SessionController {
         model.addAttribute("seats", seatGridService.getAllSeats());
         model.addAttribute("movies", sessionService.findAll());
         model.addAttribute("user", getUser(httpSession));
-        return "sessions";
+        return "session/sessions";
     }
 
     /**

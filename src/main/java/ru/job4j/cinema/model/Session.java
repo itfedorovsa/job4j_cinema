@@ -41,6 +41,11 @@ public class Session {
         this.sessionId = sessionId;
     }
 
+    public Session(int sessionId, String name) {
+        this.sessionId = sessionId;
+        this.name = name;
+    }
+
     public Session(int sessionId, String name, int year, String description) {
         this.sessionId = sessionId;
         this.name = name;

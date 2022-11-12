@@ -53,7 +53,7 @@ public class TicketController {
         model.addAttribute("seats", seatGridService.getAllSeats());
         model.addAttribute("tickets", ticketService.findByUserId(user.getUserId()));
         model.addAttribute("user", getUser(httpSession));
-        return "tickets";
+        return "ticket/tickets";
     }
 
     /**
@@ -65,7 +65,7 @@ public class TicketController {
     @GetMapping("/orderFail")
     public String orderFail(Model model, HttpSession httpSession) {
         model.addAttribute("user", getUser(httpSession));
-        return "orderFail";
+        return "error/orderFail";
     }
 
     /**
@@ -75,7 +75,7 @@ public class TicketController {
      * @param httpSession HTTPSession
      * @return orderedTicket.html - page with purchased ticket
      */
-    @GetMapping("/orderedTicket")
+    @GetMapping("orderedTicket")
     public String orderTicket(Model model, @RequestParam("ticketId") int ticketId, HttpSession httpSession) {
         model.addAttribute("movies", sessionService.findAll());
         model.addAttribute("seats", seatGridService.getAllSeats());
@@ -86,7 +86,7 @@ public class TicketController {
         }
         model.addAttribute("tickets", ticketObj);
         model.addAttribute("user", getUser(httpSession));
-        return "orderedTicket";
+        return "ticket/orderedTicket";
     }
 
     /**
@@ -102,7 +102,7 @@ public class TicketController {
         model.addAttribute("movies", sessionService.findAll());
         model.addAttribute("movieId", id);
         model.addAttribute("user", getUser(httpSession));
-        return "addTicket";
+        return "ticket/addTicket";
     }
 
     /**

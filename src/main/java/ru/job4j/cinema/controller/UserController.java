@@ -38,7 +38,7 @@ public class UserController {
         Optional<User> regUser = userService.add(user);
         if (regUser.isEmpty()) {
             model.addAttribute("message", "A user with this email already exists");
-            return "redirect:/fail";
+            return "redirect:/error/fail";
         }
         return "redirect:/success";
     }
@@ -53,7 +53,7 @@ public class UserController {
     public String addPost(Model model, HttpSession httpSession) {
         model.addAttribute("user", new User(0, "Name", "Email", "Phone"));
         model.addAttribute("user", getUser(httpSession));
-        return "addUser";
+        return "user/addUser";
     }
 
     /**
@@ -79,7 +79,7 @@ public class UserController {
     public String fail(Model model, HttpSession httpSession) {
         model.addAttribute("user", new User(0, "Name", "Email", "Phone"));
         model.addAttribute("user", getUser(httpSession));
-        return "fail";
+        return "error/fail";
     }
 
     /**
@@ -132,7 +132,7 @@ public class UserController {
     public String profile(Model model, HttpSession httpSession) {
         model.addAttribute("user", new User(0, "Name", "Email", "Phone"));
         model.addAttribute("user", getUser(httpSession));
-        return "profile";
+        return "user/profile";
     }
 
     /**
@@ -146,7 +146,7 @@ public class UserController {
     public String updateProfile(Model model, HttpSession httpSession, @PathVariable("userId") int userId) {
         model.addAttribute("user", userService.findById(userId));
         model.addAttribute("user", getUser(httpSession));
-        return "updateProfile";
+        return "user/updateProfile";
     }
 
     /**

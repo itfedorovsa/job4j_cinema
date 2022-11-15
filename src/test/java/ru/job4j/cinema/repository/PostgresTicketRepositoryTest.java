@@ -1,5 +1,6 @@
 package ru.job4j.cinema.repository;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -11,6 +12,7 @@ import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SimpleSeatGridService;
 
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,6 +34,7 @@ import static org.junit.Assert.assertTrue;
 public class PostgresTicketRepositoryTest {
 
     private static Connection connection;
+    private static DataSource dataSource = new BasicDataSource();
 
     @BeforeClass
     public static void initConnection() {
@@ -67,7 +70,7 @@ public class PostgresTicketRepositoryTest {
      */
     @Test
     public void whenAddTicket() {
-        TicketRepository ticketRep = new PostgresTicketRepository(new Main().loadPool(), new SimpleSeatGridService());
+        TicketRepository ticketRep = new PostgresTicketRepository(dataSource, new SimpleSeatGridService());
         Session sessionObj = new Session(2, "name", 1999, "desc");
         Optional<Session> session = new PostgresSessionRepository(
                 new Main().loadPool()).add(sessionObj);
@@ -89,7 +92,7 @@ public class PostgresTicketRepositoryTest {
      */
     @Test
     public void whenFindTicketByUserId() {
-        TicketRepository ticketRep = new PostgresTicketRepository(new Main().loadPool(), new SimpleSeatGridService());
+        TicketRepository ticketRep = new PostgresTicketRepository(dataSource, new SimpleSeatGridService());
         Session sessionObj = new Session(2, "name", 1999, "desc");
         Optional<Session> session = new PostgresSessionRepository(
                 new Main().loadPool()).add(sessionObj);
@@ -113,7 +116,7 @@ public class PostgresTicketRepositoryTest {
      */
     @Test
     public void whenFindAllTickets() {
-        TicketRepository ticketRep = new PostgresTicketRepository(new Main().loadPool(), new SimpleSeatGridService());
+        TicketRepository ticketRep = new PostgresTicketRepository(dataSource, new SimpleSeatGridService());
         Session sessionObj = new Session(2, "name", 1999, "desc");
         Optional<Session> session = new PostgresSessionRepository(
                 new Main().loadPool()).add(sessionObj);

@@ -60,8 +60,8 @@ public class PostgresTicketRepository implements TicketRepository {
 
     private static final Logger LOG = LogManager.getLogger(PostgresUserRepository.class.getName());
 
-    public PostgresTicketRepository(BasicDataSource pool, SimpleSeatGridService seatGridService) {
-        this.pool = pool;
+    public PostgresTicketRepository(DataSource source, SimpleSeatGridService seatGridService) {
+        this.pool = source;
         this.seatGridService = seatGridService;
     }
 

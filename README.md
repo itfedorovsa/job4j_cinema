@@ -32,15 +32,40 @@ Implemented with:
  <li>Open the command line, go to the Target folder</li>
  <li>Run this file through "java -jar job4j_cinema-1.0-SNAPSHOT.jar" command</li>
  <li>Then go to the http://localhost:8080/index page</li>
+
+
+# Screenshots
+<li> Login page:
+  ![Login page](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/1login_page.png) </li>
+<li> User adding:
+  ![User adding](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/2add_user.png) </li>
+<li> Successful user adding:
+  ![Successful user adding](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/3success.png) </li>
+<li> Failed user adding:
+  ![Failed user adding](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/4fail_sign_up.png) </li>
+<li> Failed log in:
+  ![Failed log in](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/5fail_true_incorrect_login.png) </li>
+<li> Index page:
+  ![Index page](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/6index.png) </li>
+<li> Sessions (movies) page:
+  ![Sessions page](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/7sessions.png) </li>
+<li> Ticket adding form:
+  ![Ticket adding form](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/8add_ticket.png) </li>
+<li> Ticket adding form (list):
+  ![Ticket adding form list](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/9add_ticket_list.png) </li>
+<li> Ordered ticket:
+  ![Ordered ticket](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/10ordered_ticket.png) </li>
+<li> User tickets:
+  ![User tickets](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/11tickets.png) </li>
+<li> Seat occupied:
+  ![Seat occupied](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/12order_fail.png) </li>
+<li> All seats sold:
+  ![All seats sold](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/13all_seats_sold.png) </li>
+<li> Profile page:
+  ![Profile page](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/14profile.png) </li>
+<li> Profile updating page:
+  ![Profile updating page](https://github.com/itfedorovsa/job4j_cinema/blob/master/src/main/resources/app_screenshots/15update_profile.png) </li>
 </ul>
 
 Contact me: itfedorovsa@gmail.com
-
-
- 
-
-
-
-
-
 

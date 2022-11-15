@@ -32,40 +32,40 @@ Implemented with:
  <li>Open the command line, go to the Target folder</li>
  <li>Run this file through "java -jar job4j_cinema-1.0-SNAPSHOT.jar" command</li>
  <li>Then go to the http://localhost:8080/index page</li>
-
+</ul>
 
 # Screenshots
-<li> Login page:
-  ![Login page](src/main/resources/app_screenshots/1login_page.png) </li>
-<li> User adding:
-  ![User adding](src/main/resources/app_screenshots/2add_user.png) </li>
-<li> Successful user adding:
-  ![Successful user adding](src/main/resources/app_screenshots/3success.png) </li>
-<li> Failed user adding:
-  ![Failed user adding](src/main/resources/app_screenshots/4fail_sign_up.png) </li>
-<li> Failed log in:
-  ![Failed log in](src/main/resources/app_screenshots/5fail_true_incorrect_login.png) </li>
-<li> Index page:
-  ![Index page](src/main/resources/app_screenshots/6index.png) </li>
-<li> Sessions (movies) page:
-  ![Sessions page](src/main/resources/app_screenshots/7sessions.png) </li>
-<li> Ticket adding form:
-  ![Ticket adding form](src/main/resources/app_screenshots/8add_ticket.png) </li>
-<li> Ticket adding form (list):
-  ![Ticket adding form list](src/main/resources/app_screenshots/9add_ticket_list.png) </li>
-<li> Ordered ticket:
-  ![Ordered ticket](src/main/resources/app_screenshots/10ordered_ticket.png) </li>
-<li> User tickets:
-  ![User tickets](src/main/resources/app_screenshots/11tickets.png) </li>
-<li> Seat occupied:
-  ![Seat occupied](src/main/resources/app_screenshots/12order_fail.png) </li>
-<li> All seats sold:
-  ![All seats sold](src/main/resources/app_screenshots/13all_seats_sold.png) </li>
-<li> Profile page:
-  ![Profile page](src/main/resources/app_screenshots/14profile.png) </li>
-<li> Profile updating page:
-  ![Profile updating page](src/main/resources/app_screenshots/15update_profile.png) </li>
-</ul>
+- Login page:
+  ![Login page](src/main/resources/app_screenshots/1login_page.png)
+- User adding:
+  ![User adding](src/main/resources/app_screenshots/2add_user.png) 
+- Successful user adding:
+  ![Successful user adding](src/main/resources/app_screenshots/3success.png) 
+- Failed user adding:
+  ![Failed user adding](src/main/resources/app_screenshots/4fail_sign_up.png) 
+- Failed log in:
+  ![Failed log in](src/main/resources/app_screenshots/5fail_true_incorrect_login.png) 
+- Index page:
+  ![Index page](src/main/resources/app_screenshots/6index.png) 
+- Sessions (movies) page:
+  ![Sessions page](src/main/resources/app_screenshots/7sessions.png) 
+- Ticket adding form:
+  ![Ticket adding form](src/main/resources/app_screenshots/8add_ticket.png) 
+- Ticket adding form (list):
+  ![Ticket adding form list](src/main/resources/app_screenshots/9add_ticket_list.png) 
+- Ordered ticket:
+  ![Ordered ticket](src/main/resources/app_screenshots/10ordered_ticket.png) 
+- User tickets:
+  ![User tickets](src/main/resources/app_screenshots/11tickets.png) 
+- Seat occupied:
+  ![Seat occupied](src/main/resources/app_screenshots/12order_fail.png) 
+- All seats sold:
+  ![All seats sold](src/main/resources/app_screenshots/13all_seats_sold.png) 
+- Profile page:
+  ![Profile page](src/main/resources/app_screenshots/14profile.png) 
+- Profile updating page:
+  ![Profile updating page](src/main/resources/app_screenshots/15update_profile.png)
+
 
 Contact me: itfedorovsa@gmail.com
 

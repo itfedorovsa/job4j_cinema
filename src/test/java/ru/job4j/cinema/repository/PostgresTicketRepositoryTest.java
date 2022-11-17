@@ -12,10 +12,8 @@ import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SimpleSeatGridService;
 
-import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -32,22 +30,18 @@ import static org.junit.Assert.assertTrue;
  *  @version 1.0
  */
 public class PostgresTicketRepositoryTest {
-
-    private static Connection connection;
-    private static DataSource dataSource = new BasicDataSource();
+    private static BasicDataSource dataSource = new BasicDataSource();
 
     @BeforeClass
     public static void initConnection() {
         try (InputStream in = PostgresTicketRepositoryTest.class.getClassLoader().getResourceAsStream("test.properties")) {
             Properties config = new Properties();
             config.load(in);
+            dataSource.setUrl(config.getProperty("url"));
+            dataSource.setUsername(config.getProperty("username"));
+            dataSource.setPassword(config.getProperty("password"));
+            dataSource.setDriverClassName(config.getProperty("driver-class-name"));
             Class.forName(config.getProperty("driver-class-name"));
-            connection = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-
-            );
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -55,12 +49,12 @@ public class PostgresTicketRepositoryTest {
 
     @AfterClass
     public static void closeConnection() throws SQLException {
-        connection.close();
+        dataSource.close();
     }
 
     @After
     public void wipeTable() throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM tickets; DELETE FROM users;")) {
+        try (PreparedStatement statement = dataSource.getConnection().prepareStatement("DELETE FROM tickets; DELETE FROM users;")) {
             statement.execute();
         }
     }
@@ -73,11 +67,11 @@ public class PostgresTicketRepositoryTest {
         TicketRepository ticketRep = new PostgresTicketRepository(dataSource, new SimpleSeatGridService());
         Session sessionObj = new Session(2, "name", 1999, "desc");
         Optional<Session> session = new PostgresSessionRepository(
-                new Main().loadPool()).add(sessionObj);
+                dataSource).add(sessionObj);
         assertTrue(session.isPresent());
         User userObj = new User(95, "name", "email13", "phone13");
         Optional<User> user = new PostgresUserRepository(
-                new Main().loadPool()).add(userObj);
+                dataSource).add(userObj);
         assertTrue(user.isPresent());
         SimpleSeatGridService seatGrid = new SimpleSeatGridService();
         Seat seatObj = new Seat(3, seatGrid.findById(3).getRow(), seatGrid.findById(3).getCell());
@@ -95,11 +89,11 @@ public class PostgresTicketRepositoryTest {
         TicketRepository ticketRep = new PostgresTicketRepository(dataSource, new SimpleSeatGridService());
         Session sessionObj = new Session(2, "name", 1999, "desc");
         Optional<Session> session = new PostgresSessionRepository(
-                new Main().loadPool()).add(sessionObj);
+                dataSource).add(sessionObj);
         assertTrue(session.isPresent());
         User userObj = new User("name", "email19", "phone19");
         Optional<User> user = new PostgresUserRepository(
-                new Main().loadPool()).add(userObj);
+                dataSource).add(userObj);
         assertTrue(user.isPresent());
         SimpleSeatGridService seatGrid = new SimpleSeatGridService();
         Seat seatObj = new Seat(3, seatGrid.findById(3).getRow(), seatGrid.findById(3).getCell());
@@ -119,11 +113,11 @@ public class PostgresTicketRepositoryTest {
         TicketRepository ticketRep = new PostgresTicketRepository(dataSource, new SimpleSeatGridService());
         Session sessionObj = new Session(2, "name", 1999, "desc");
         Optional<Session> session = new PostgresSessionRepository(
-                new Main().loadPool()).add(sessionObj);
+                dataSource).add(sessionObj);
         assertTrue(session.isPresent());
         User userObj = new User("name", "email21", "phone21");
         Optional<User> user = new PostgresUserRepository(
-                new Main().loadPool()).add(userObj);
+                dataSource).add(userObj);
         assertTrue(user.isPresent());
         SimpleSeatGridService seatGrid = new SimpleSeatGridService();
         Seat seatObj = new Seat(3, seatGrid.findById(3).getRow(), seatGrid.findById(3).getCell());

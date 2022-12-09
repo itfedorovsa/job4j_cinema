@@ -38,7 +38,7 @@ public class UserController {
         Optional<User> regUser = userService.add(user);
         if (regUser.isEmpty()) {
             model.addAttribute("message", "A user with this email already exists");
-            return "redirect:/error/fail";
+            return "redirect:/fail";
         }
         return "redirect:/success";
     }

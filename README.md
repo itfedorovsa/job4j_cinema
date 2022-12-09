@@ -4,8 +4,9 @@ This project is a web application - simple cinema implementation.
 User can:
 - Sign up, log in, log out and change account
 - Choose movies and seats
-- View purchased tickets
+- View tickets purchased by user
 - View and change personal account data. 
+Оnly free seats are available for selection.
 If two or more users try to buy a same ticket on a same session then an error page will be shown.
 If there are no available seats, user will be prompted to select another session.
 

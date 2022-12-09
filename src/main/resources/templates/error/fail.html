@@ -17,7 +17,7 @@
 
     <title>The Fast And The Furious Cinema</title>
 </head>
-<body th:background="@{/images/bg.jpg}" th:width="1920">
+<body th:background="@{/images/bg_cinema.jpg}" th:width="1920">
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" th:href="@{/index}">The Fast And The Furious Cinema</a>
@@ -25,10 +25,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </nav>
+    <br/>
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                A user with this email or phone already exists.
+                A user with this email or phone is already exists.
                 <a class="nav-item nav-link" th:href="@{/formAddUser}">Retry</a>
             </div>
         </div>

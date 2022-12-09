@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>The Fast And The Furious Cinema</title>
 </head>
-<body th:background="@{/images/bg.jpg}" th:width="1920">
+<body th:background="@{/images/bg_cinema.jpg}" th:width="1920">
 
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,28 +40,38 @@
             </div>
         </div>
     </nav>
-    <div class="row">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <a th:href="@{|/updateProfile/${user.userId}|}">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <span th:text="${user.name}"></span>
-                <td th:text="${user.email}"/>
-                <td th:text="${user.phone}"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <br/>
+    <br/>
+    <h2 align="center">Your profile:</h2>
+    <br/>
+    <div class="container pt-3">
+        <div class="row">
+            <div class="card" style="width: 100%">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <a th:href="@{|/updateProfile/${user.userId}|}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <span th:text="${user.name}"></span>
+                            <td th:text="${user.email}"/>
+                            <td th:text="${user.phone}"/>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

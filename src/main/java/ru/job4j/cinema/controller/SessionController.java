@@ -7,16 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SeatGridService;
 import ru.job4j.cinema.service.SessionService;
-import ru.job4j.cinema.service.SimpleSeatGridService;
-import ru.job4j.cinema.service.SimpleSessionService;
 
 import javax.servlet.http.HttpSession;
 
 /**
  * SessionController
+ *
  * @author itfedorovsa (itfedorovsa@gmail.com)
- * @since 03.11.22
  * @version 1.0
+ * @since 03.11.22
  */
 @ThreadSafe
 @Controller
@@ -31,7 +30,8 @@ public class SessionController {
 
     /**
      * Sessions page
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
      * @return sessions.html - all movies page
      */
@@ -44,9 +44,10 @@ public class SessionController {
     }
 
     /**
-     * Gives "Guest" name if user unregistered
+     * Create a user with name "Guest" if user is missing
+     *
      * @param httpSession HTTPSession
-     * @return user with "Guest" name or user with currrent name
+     * @return new User with "Guest" name or current User
      */
     private User getUser(HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
@@ -56,4 +57,5 @@ public class SessionController {
         }
         return user;
     }
+
 }

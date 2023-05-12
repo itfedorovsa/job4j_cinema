@@ -9,9 +9,9 @@ import java.io.IOException;
 
 /**
  * Authorization filter
- *  * @author itfedorovsa (itfedorovsa@gmail.com)
- *  * @since 03.11.22
- *  * @version 1.0
+ * * @author itfedorovsa (itfedorovsa@gmail.com)
+ * * @since 03.11.22
+ * * @version 1.0
  */
 @Component
 public class AuthFilter implements Filter {
@@ -35,5 +35,6 @@ public class AuthFilter implements Filter {
         }
         chain.doFilter(req, res);
     }
+
 }
 

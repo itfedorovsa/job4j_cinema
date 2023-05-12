@@ -4,29 +4,30 @@ import java.util.Objects;
 
 /**
  * Session data model
- *  @author itfedorovsa (itfedorovsa@gmail.com)
- *  @since 03.11.22
- *  @version 1.0
+ *
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @version 1.0
+ * @since 03.11.22
  */
 public class Session {
 
     /**
-     *  Movie id.
+     * Movie id
      */
     private int sessionId;
 
     /**
-     *  Movie name.
+     * Movie name
      */
     private String name;
 
     /**
-     *  Movie's year of release.
+     * Movie's year of release
      */
     private int year;
 
     /**
-     *  Movie's description.
+     * Movie's description
      */
     private String description;
 
@@ -111,4 +112,5 @@ public class Session {
                 + ", desc='" + description + '\''
                 + '}';
     }
+
 }

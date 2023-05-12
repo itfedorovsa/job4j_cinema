@@ -18,9 +18,10 @@ import java.util.Optional;
 
 /**
  * TicketController
+ *
  * @author itfedorovsa (itfedorovsa@gmail.com)
- * @since 03.11.22
  * @version 1.0
+ * @since 03.11.22
  */
 @ThreadSafe
 @Controller
@@ -42,7 +43,8 @@ public class TicketController {
 
     /**
      * Tickets page
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
      * @return tickets.html - all purchased tickets by current user
      */
@@ -58,7 +60,8 @@ public class TicketController {
 
     /**
      * Order fail page
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
      * @return orderFail.html - page-warning about the inability to buy a ticket
      */
@@ -70,8 +73,9 @@ public class TicketController {
 
     /**
      * Ticket order page
-     * @param model Model
-     * @param ticketId Ticket id from DB
+     *
+     * @param model       Model
+     * @param ticketId    Ticket id from DB
      * @param httpSession HTTPSession
      * @return orderedTicket.html - page with purchased ticket
      */
@@ -91,8 +95,9 @@ public class TicketController {
 
     /**
      * Ticket creating page
-     * @param model Model
-     * @param id current session id
+     *
+     * @param model       Model
+     * @param id          current session id
      * @param httpSession HTTPSession
      * @return addTicket.html - ticket creating form
      */
@@ -107,9 +112,10 @@ public class TicketController {
 
     /**
      * Post method for creating a ticket
-     * @param model Model
-     * @param id current session id
-     * @param seatId seat grid id
+     *
+     * @param model       Model
+     * @param id          current session id
+     * @param seatId      seat grid id
      * @param httpSession HTTPSession
      * @return order fail page or page with purchased ticket
      */
@@ -136,7 +142,7 @@ public class TicketController {
                 session,
                 seat,
                 user
-                );
+        );
         Optional<Ticket> order = ticketService.add(ticket);
         if (order.isEmpty()) {
             return "redirect:/orderFail";
@@ -145,9 +151,10 @@ public class TicketController {
     }
 
     /**
-     * Gives "Guest" name if user unregistered
+     * Create a user with name "Guest" if user is missing
+     *
      * @param httpSession HTTPSession
-     * @return user with "Guest" name or user with currrent name
+     * @return new User with "Guest" name or current User
      */
     private User getUser(HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
@@ -157,4 +164,5 @@ public class TicketController {
         }
         return user;
     }
+
 }

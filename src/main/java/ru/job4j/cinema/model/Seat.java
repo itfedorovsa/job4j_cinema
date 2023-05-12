@@ -4,24 +4,25 @@ import java.util.Objects;
 
 /**
  * Seat data model
- *  @author itfedorovsa (itfedorovsa@gmail.com)
- *  @since 03.11.22
- *  @version 1.0
+ *
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @version 1.0
+ * @since 03.11.22
  */
 public class Seat {
 
     /**
-     *  Seat id (id from SeatGridService grid). Used to get row and cell values from SeatGridService.
+     * Seat id (id from SeatGridService grid). Used to get row and cell values from SeatGridService.
      */
     int seatId;
 
     /**
-     *  Row number
+     * Row number
      */
     int row;
 
     /**
-     *  Cell number
+     * Cell number
      */
     int cell;
 
@@ -88,4 +89,5 @@ public class Seat {
     public String toString() {
         return "Row " + row + ", Cell " + cell;
     }
+
 }

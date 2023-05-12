@@ -14,9 +14,10 @@ import java.util.Optional;
 
 /**
  * UserController
- *  @author itfedorovsa (itfedorovsa@gmail.com)
- *  @since 03.11.22
- *  @version 1.0
+ *
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @version 1.0
+ * @since 03.11.22
  */
 @ThreadSafe
 @Controller
@@ -29,8 +30,9 @@ public class UserController {
 
     /**
      * Registration post page
+     *
      * @param model Model
-     * @param user empty user to fill
+     * @param user  empty user to fill
      * @return fail or success registration page
      */
     @PostMapping("/registration")
@@ -45,7 +47,8 @@ public class UserController {
 
     /**
      * Sign up form
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
      * @return addUser.html - new user creating form
      */
@@ -58,7 +61,8 @@ public class UserController {
 
     /**
      * Affirmed registration page
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
      * @return Affirmed registration page
      */
@@ -71,7 +75,8 @@ public class UserController {
 
     /**
      * Declined registration page
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
      * @return Declined registration page
      */
@@ -84,8 +89,9 @@ public class UserController {
 
     /**
      * Start registration form
+     *
      * @param model Model
-     * @param fail fail condition
+     * @param fail  fail condition
      * @return login.html - log in form
      */
     @GetMapping("/loginPage")
@@ -95,9 +101,10 @@ public class UserController {
     }
 
     /**
-     *  Log in post page
+     * Log in post page
+     *
      * @param user current user model
-     * @param req request from DB on user presence
+     * @param req  request from DB on user presence
      * @return data duplication warning or index page
      */
     @PostMapping("/login")
@@ -113,6 +120,7 @@ public class UserController {
 
     /**
      * Log out page
+     *
      * @param httpSession HTTPSession
      * @return log in page
      */
@@ -124,7 +132,8 @@ public class UserController {
 
     /**
      * User profile page
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
      * @return profile.html - current user data page
      */
@@ -137,9 +146,10 @@ public class UserController {
 
     /**
      * Updating user profile
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
-     * @param userId current user id
+     * @param userId      current user id
      * @return updateProfile.html - user updating form
      */
     @GetMapping("/updateProfile/{userId}")
@@ -151,7 +161,8 @@ public class UserController {
 
     /**
      * User update post page
-     * @param user current user
+     *
+     * @param user        current user
      * @param httpSession HTTPSession
      * @return log in page to re log in
      */
@@ -165,9 +176,10 @@ public class UserController {
     }
 
     /**
-     * Gives "Guest" name if user unregistered
+     * Create a user with name "Guest" if user is missing
+     *
      * @param httpSession HTTPSession
-     * @return user with "Guest" name or user with currrent name
+     * @return new User with "Guest" name or current User
      */
     private User getUser(HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
@@ -177,5 +189,6 @@ public class UserController {
         }
         return user;
     }
+
 }
 

@@ -10,13 +10,20 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
- *  Application launch class
- *  @author itfedorovsa (itfedorovsa@gmail.com)
- *  @since 03.11.22
- *  @version 1.0
+ * Application launch class
+ *
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @version 1.0
+ * @since 03.11.22
  */
 @SpringBootApplication
 public class Main {
+
+    /**
+     * Load properties
+     *
+     * @return {@link java.util.Properties}
+     */
     private Properties loadDbProperties() {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
@@ -39,7 +46,8 @@ public class Main {
 
     /**
      * Starting DB connections' pool
-     * @return BasicDataSource pool with connections to DB
+     *
+     * @return BasicDataSource pool with connections to DB. Type {@link org.apache.commons.dbcp2.BasicDataSource}
      */
     @Bean
     public BasicDataSource loadPool() {
@@ -57,11 +65,13 @@ public class Main {
 
     /**
      * Starts the application.
+     *
      * @param args app arguments
      */
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
         System.out.println("Go to http://localhost:8080/index");
     }
+
 }
 

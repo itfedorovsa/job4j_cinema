@@ -9,15 +9,15 @@ import ru.job4j.cinema.service.SessionService;
 
 import javax.servlet.http.HttpSession;
 
-@ThreadSafe
-@Controller
-
 /**
  * IndexController
+ *
  * @author itfedorovsa (itfedorovsa@gmail.com)
- * @since 03.11.22
  * @version 1.0
+ * @since 03.11.22
  */
+@ThreadSafe
+@Controller
 public class IndexController {
     private final SessionService sessionService;
 
@@ -27,7 +27,8 @@ public class IndexController {
 
     /**
      * Index page
-     * @param model Model
+     *
+     * @param model       Model
      * @param httpSession HTTPSession
      * @return index.html - start page
      */

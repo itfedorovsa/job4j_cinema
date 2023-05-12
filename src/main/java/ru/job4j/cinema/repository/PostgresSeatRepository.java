@@ -18,13 +18,15 @@ import java.util.List;
 
 /**
  * Seat persistence layer
- *  @author itfedorovsa (itfedorovsa@gmail.com)
- *  @since 03.11.22
- *  @version 1.0
+ *
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @version 1.0
+ * @since 03.11.22
  */
 @ThreadSafe
 @Repository
 public class PostgresSeatRepository implements SeatRepository {
+
     private final DataSource pool;
 
     private final SeatGridService seatGridService;
@@ -39,14 +41,16 @@ public class PostgresSeatRepository implements SeatRepository {
     }
 
     /**
-     * @param sessionId current movie id
-     * @return list of remaining free seats in the cinema hall
+     * Get free seats
+     *
+     * @param sessionId current movie (Session) id
+     * @return list of remaining free seats in the cinema hall. Type {@link java.util.List<ru.job4j.cinema.model.Seat>}
      */
     public List<Seat> getFreeSeats(int sessionId) {
         List<Seat> dbSeats = new ArrayList<>();
         List<Seat> freeSeats = seatGridService.getAllSeats();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(SELECT_OCCUPIED_SEATS)) {
+             PreparedStatement ps = cn.prepareStatement(SELECT_OCCUPIED_SEATS)) {
             ps.setInt(1, sessionId);
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -59,4 +63,5 @@ public class PostgresSeatRepository implements SeatRepository {
         freeSeats.removeAll(dbSeats);
         return freeSeats;
     }
+
 }

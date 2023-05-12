@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ru.job4j.cinema.Main;
 import ru.job4j.cinema.model.Seat;
 import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
@@ -13,7 +12,6 @@ import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SimpleSeatGridService;
 
 import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -25,11 +23,13 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Ticket persistence test class
- *  @author itfedorovsa (itfedorovsa@gmail.com)
- *  @since 09.11.22
- *  @version 1.0
+ *
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @version 1.0
+ * @since 09.11.22
  */
 public class PostgresTicketRepositoryTest {
+
     private static BasicDataSource dataSource = new BasicDataSource();
 
     @BeforeClass
@@ -54,13 +54,14 @@ public class PostgresTicketRepositoryTest {
 
     @After
     public void wipeTable() throws SQLException {
-        try (PreparedStatement statement = dataSource.getConnection().prepareStatement("DELETE FROM tickets; DELETE FROM users;")) {
+        try (PreparedStatement statement = dataSource.getConnection().prepareStatement(
+                "DELETE FROM tickets; DELETE FROM users;")) {
             statement.execute();
         }
     }
 
     /**
-     *  Ticket adding test
+     * Ticket adding test
      */
     @Test
     public void whenAddTicket() {
@@ -82,7 +83,7 @@ public class PostgresTicketRepositoryTest {
     }
 
     /**
-     *  Searching by user id test
+     * Searching by user id test
      */
     @Test
     public void whenFindTicketByUserId() {
@@ -106,7 +107,7 @@ public class PostgresTicketRepositoryTest {
     }
 
     /**
-     *  All tickets searching test
+     * All tickets searching test
      */
     @Test
     public void whenFindAllTickets() {
@@ -128,4 +129,5 @@ public class PostgresTicketRepositoryTest {
         assertEquals(1, extracted.size());
         assertEquals("name", extracted.get(0).getSession().getName());
     }
+
 }

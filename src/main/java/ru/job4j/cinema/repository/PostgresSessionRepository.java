@@ -18,28 +18,41 @@ import java.util.Optional;
 
 /**
  * Session persistence layer
- *  @author itfedorovsa (itfedorovsa@gmail.com)
- *  @since 03.11.22
- *  @version 1.0
+ *
+ * @author itfedorovsa (itfedorovsa@gmail.com)
+ * @version 1.0
+ * @since 03.11.22
  */
 @ThreadSafe
 @Repository
 public class PostgresSessionRepository implements SessionRepository {
+
     private final DataSource pool;
+
     private static final String INSERT = "INSERT INTO sessions(s_name, s_year, s_description) VALUES (?, ?, ?)";
+
     private static final String SELECT_ALL = "SELECT * FROM sessions";
+
     private static final String UPDATE = "UPDATE sessions SET s_name = ?, s_year = ? WHERE s_description = ?";
+
     private static final String SELECT_ID = "SELECT * FROM sessions WHERE s_id = ?";
+
     private static final Logger LOG = LogManager.getLogger(PostgresUserRepository.class.getName());
 
     public PostgresSessionRepository(BasicDataSource pool) {
         this.pool = pool;
     }
 
+    /**
+     * Add session
+     *
+     * @param session {@link ru.job4j.cinema.model.Session}
+     * @return {@link java.util.Optional<ru.job4j.cinema.model.Session>}
+     */
     public Optional<Session> add(Session session) {
         Optional<Session> rsl = Optional.empty();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = cn.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, session.getName());
             ps.setInt(2, session.getYear());
             ps.setString(3, session.getDescription());
@@ -56,9 +69,14 @@ public class PostgresSessionRepository implements SessionRepository {
         return rsl;
     }
 
+    /**
+     * Update session
+     *
+     * @param session {@link ru.job4j.cinema.model.Session}
+     */
     public void update(Session session) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(UPDATE)) {
+             PreparedStatement ps = cn.prepareStatement(UPDATE)) {
             ps.setString(1, session.getName());
             ps.setInt(2, session.getYear());
             ps.setString(3, session.getDescription());
@@ -68,10 +86,16 @@ public class PostgresSessionRepository implements SessionRepository {
         }
     }
 
+    /**
+     * Find session by id
+     *
+     * @param id Session id
+     * @return {@link java.util.Optional<ru.job4j.cinema.model.Session>}
+     */
     public Optional<Session> findById(int id) {
         Optional<Session> rsl = Optional.empty();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(SELECT_ID)
+             PreparedStatement ps = cn.prepareStatement(SELECT_ID)
         ) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
@@ -85,10 +109,15 @@ public class PostgresSessionRepository implements SessionRepository {
         return rsl;
     }
 
+    /**
+     * Find all sessions
+     *
+     * @return {@link java.util.List<ru.job4j.cinema.model.Session>}
+     */
     public List<Session> findAll() {
         List<Session> sessions = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(SELECT_ALL)
+             PreparedStatement ps = cn.prepareStatement(SELECT_ALL)
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -102,7 +131,8 @@ public class PostgresSessionRepository implements SessionRepository {
     }
 
     /**
-     * Standalone method for creating Session object
+     * Standalone method for creating {@link ru.job4j.cinema.model.Session} object
+     *
      * @param rslSet query from DB
      * @return Session with values from ResultSet received from query
      * @throws SQLException may be thrown during interaction with the DB
@@ -113,4 +143,5 @@ public class PostgresSessionRepository implements SessionRepository {
                 rslSet.getInt("s_year"),
                 rslSet.getString("s_description"));
     }
+
 }
